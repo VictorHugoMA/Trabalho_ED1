@@ -17,8 +17,7 @@
     }
 
     int open_txt(char *argv){
-        printf("Abrir\n");
-        printf("%s\n", argv);
+        printf("Abrir %s\n", argv);
     }
 
     
