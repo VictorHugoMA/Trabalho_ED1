@@ -1,6 +1,16 @@
+#define SUCCESS 0
+#define INVALID_NULL_POINTER -1
+
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+
+/*  Caminhos para os arquivos
+
+    Victor: "C:\\Trabalho_ED1\\Trabalho_ED1\\Arquivos\\GIMP.pgm"
+
+
+*/
 
     int open_txt(char *argv);
     int open_imm(char *argv);
@@ -12,10 +22,12 @@
     int main(int argc, char *argv[]){
 
         if(strcmp(argv[1], "-open")==0){
-            if(strcmp(argv[2], "file.txt")==0)
+            open_txt(argv[2]);
+            /*if(strcmp(argv[2], "file.txt")==0)
                 open_txt(argv[2]);
             else if(strcmp(argv[2], "file.imm")==0)
                 open_imm(argv[2]);
+            */
         }
         else if(strcmp(argv[1], "-convert")==0){
             convert_file(argv[2], argv[3]);
@@ -38,6 +50,46 @@
 
     int open_txt(char *argv){
         printf("Abrir %s\n", argv);
+
+        char c;
+        FILE *fp;
+        fp = fopen(argv, "r");
+
+        if(fp==NULL){
+            printf("Erro na abertura do arquivo\n");
+            return INVALID_NULL_POINTER;
+        }
+        int cont=0;
+        while(cont<3){
+            c = fgetc(fp);
+            if(c==' '){
+                printf(" ");
+            }
+            else{
+                printf("%c", c);
+            }
+            if(c=='\n'){
+                printf("\n");
+                cont++;
+            }
+
+        }
+        while(!feof(fp)){
+            c = fgetc(fp);
+            if(c=='\n'){
+                printf("\n");
+            }
+            else{
+                printf("%c", c);
+            }
+
+        }
+
+        return SUCCESS;
+
+
+        fclose(fp);
+        
     }
 
     int open_imm(char *argv){
