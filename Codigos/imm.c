@@ -6,19 +6,15 @@
 /*  Caminhos para os arquivos
 
     Victor: "C:\\Trabalho_ED1\\Trabalho_ED1\\Arquivos\\GIMP.pgm"
-
+    Pedro: "C:\\Users\\Zorak\\OneDrive\\Documentos\\trab\\Trabalho_ED1\\Arquivos\\GIMP.pgm"
 
 */
 
     int main(int argc, char *argv[]){
 
         if(strcmp(argv[1], "-open")==0){
-            open_txt(argv[2]);
-            /*if(strcmp(argv[2], "file.txt")==0)
-                open_txt(argv[2]);
-            else if(strcmp(argv[2], "file.imm")==0)
-                open_imm(argv[2]);
-            */
+            open_file(argv[2]);
+
         }
         else if(strcmp(argv[1], "-convert")==0){
             convert_file(argv[2], argv[3]);
