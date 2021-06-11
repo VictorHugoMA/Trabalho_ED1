@@ -19,7 +19,7 @@
                 return INVALID_NULL_POINTER;
             }
 
-            aux = tam_mat_file(fp, &nl, &nc);
+            aux = tam_mat_file(file, &nl, &nc);
             if(aux!=SUCCESS){
                 return ERROR;
             }
