@@ -130,7 +130,7 @@
         }
         else if (identify_type(file) == IMM_FILE)
         {
-            /* code */
+            
         }
         
 
