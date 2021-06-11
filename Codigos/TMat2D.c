@@ -224,16 +224,16 @@
         }
     }
 
-    int print_matriz(TadMat *p, int *val){
+    int print_matriz(TadMat *p){
         if(p==NULL){
             return -1;
         }
-        int i, j;
+        int i, j, val;
         printf("\n");
         for(i=0; i<p->nlinhas; i++){
             for(j=0; j<p->ncolunas; j++){
-                acessar_mat(p, i, j, val);
-                printf("%d ", *val);
+                acessar_mat(p, i, j, &val);
+                printf("%d ", val);
             }
             printf("\n");
         }

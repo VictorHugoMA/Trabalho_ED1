@@ -4,22 +4,22 @@ TadMat *criar_mat(int nlin, int ncol);
 
 int free_mat(TadMat *mat);
 
-int escrever_mat(TadMat *mat, int nlin, int ncol, double val);
+int escrever_mat(TadMat *mat, int nlin, int ncol, int val);
 
-int acessar_mat(TadMat *mat, int nlin, int ncol, double *val);
+int acessar_mat(TadMat *mat, int nlin, int ncol, int *val);
 
-int preencher_mat(TadMat *mat, double max);
+int preencher_mat(TadMat *mat, int max);
 
 int soma_mat(TadMat *m1, TadMat *m2, TadMat *sm);
 
 int mult_mat(TadMat *m1, TadMat *m2, TadMat *tm);
 
-int multConst_mat(TadMat *m1, TadMat *tm, double num);
+int multConst_mat(TadMat *m1, TadMat *tm, int num);
 
-int traco_mat(TadMat *m1, double *tot);
+int traco_mat(TadMat *m1, int *tot);
 
-int somaL_mat(TadMat *m1, double **sl);
+int somaL_mat(TadMat *m1, int **sl);
 
-int somaC_mat(TadMat *m1, double **sc);
+int somaC_mat(TadMat *m1, int **sc);
 
-int print_matriz(TadMat *p, double *val);
+int print_matriz(TadMat *p);
