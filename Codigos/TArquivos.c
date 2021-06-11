@@ -115,6 +115,24 @@
 
     int tam_mat_file(char *file, int *nl, int *nc){
 
+        FILE *fp;
+
+        int aux, nl, nc, i, j, num;  
+
+        if (identify_type(file) == TXT_FILE)
+        {
+            fp = fopen(file, "r");
+            if (fp == NULL)
+            {
+                return ERROR;
+            }
+            
+        }
+        else if (identify_type(file) == IMM_FILE)
+        {
+            /* code */
+        }
+        
 
     }
 
