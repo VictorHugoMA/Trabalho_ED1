@@ -61,46 +61,22 @@
             fclose(fp);
             return SUCCESS;
         }
+
+        else{
+            return INCONSISTENT_FILE;
+        }
           
     }
 
-    //Minha tentativa de solucao para "open_file".
-/*
-    int open_file(char *file)//Recebe o nome do arquivo
-    {
-        printf("Abrir %s\n", file);
-        
-        if(identify_type(file) == TXT_FILE)
-        {
-        FILE *f;
-        f = fopen(file,"r");
 
-        if(f == NULL)
-        {
-            printf("Erro na abertura do arquivo\n");
-            system("pause");
-            return INVALID_NULL_POINTER;
-        }
-        int c;
-        while(!foef(f))
-        {
-            c = fgetc(f);
-            printf("%c",c);
-        }
-    }
-        else if(identify_type(file) == IMM_FILE)
-        {
-            printf("Abrir %s\n", file);
-        }
-            
-        fclose(f);
-        system(pause);
-        return SUCESS;
-    }
-*/
+    int convert_file(char *fileIN, char *fileOUT){
+        printf("Converte %s para %s\n", fileIN, fileOUT);
 
-    int convert_file(char *argv1, char *argv2){
-        printf("Converte %s para %s\n", argv1, argv2);
+        TadMat *mat;
+
+        open_file(fileIN, &mat);
+        mat_to_file(fileOUT, mat);
+
     }
 
     int segment_imm(char *argv1, char *argv2, char *argv3){
@@ -136,35 +112,36 @@
 
     }
 
- /*    int print_file(char *file){
-        int cont=0;
-        char c;
-        while(cont<3){
-            c = fgetc(fp);
-            if(c==' '){
-                printf(" ");
-            }
-            else{
-                printf("%c", c);
-            }
-            if(c=='\n'){
-                printf("\n");
-            cont++;
-            }
-
-        }
-        while(!feof(fp)){
-            c = fgetc(fp);
-            if(c=='\n'){
-                printf("\n");
-            }
-            else{
-                printf("%c", c);
-            }
-
-        }
-    } */
 
     int tam_mat_file(char *file, int *nl, int *nc){
 
+
     }
+
+
+
+    int mat_to_file(TadMat *mat, char *fileOUT){
+
+
+    }
+
+
+
+    int print_file(char *file){
+        TadMat *mat;
+        int aux;
+
+        aux = open_file(file, &mat);
+
+        if(aux!=SUCCESS){
+            return ERROR;
+        }
+
+        print_matriz(mat);
+        free_mat(mat);
+
+        return SUCCESS;
+    } 
+
+
+

@@ -24,4 +24,6 @@ int identify_type(char *file);
 
 int tam_mat_file(char *file, int *nl, int *nc);
 
+int mat_to_file(TadMat *mat, char *fileOUT);
+
 #endif
