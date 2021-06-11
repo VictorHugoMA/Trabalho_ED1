@@ -5,12 +5,13 @@
 #include"TMat2D.h"
     
     int open_file(char *file, TadMat **mat){
+        FILE *fp;
+        int aux, nl, nc, i, j, num;  
+
         printf("Abrir %s\n", file);
 
         if (identify_type(file) == TXT_FILE)
         {      
-            FILE *fp;
-            int aux, nl, nc, i, j, num;  
 
             fp = fopen(file, "r");
             if(fp==NULL){
@@ -40,7 +41,25 @@
         }
         else if (identify_type(file) == IMM_FILE)
         {
-            printf("Abrir %s\n", file);
+
+            fp = fopen(file, "rb");
+            if(fp==NULL){
+                printf("Erro na abertura do arquivo\n");
+                return INVALID_NULL_POINTER;
+            }
+            fread(&nl, sizeof(int), 1, fp);
+            fread(&nc, sizeof(int), 1, fp);
+
+            *mat = criar_mat(nl, nc);
+
+            for(i=0; i<nl; i++){
+                for(j=0; j<nc; j++){
+                    fread(&num, sizeof(int), 1, fp);
+                    escrever_mat(*mat, i, j, num);
+                }
+            }
+            fclose(fp);
+            return SUCCESS;
         }
           
     }
