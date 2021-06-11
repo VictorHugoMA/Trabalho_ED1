@@ -2,54 +2,45 @@
 #include<string.h>
 #include<stdlib.h>
 #include"TArquivos.h"
+#include"TMat2D.h"
     
-    int open_file(char *argv){
-        printf("Abrir %s\n", argv);
-        if (identify_type(argv) == TXT_FILE)
-        {        
-            FILE *fp;
-            fp = fopen(argv, "r");
+    int open_file(char *file, TadMat **mat){
+        printf("Abrir %s\n", file);
 
+        if (identify_type(file) == TXT_FILE)
+        {      
+            FILE *fp;
+            int aux, nl, nc, i, j, num;  
+
+            fp = fopen(file, "r");
             if(fp==NULL){
                 printf("Erro na abertura do arquivo\n");
-                system("pause");
                 return INVALID_NULL_POINTER;
             }
-            int cont=0;
-            char c;
-            while(cont<3){
-                c = fgetc(fp);
-                if(c==' '){
-                    printf(" ");
-                }
-                else{
-                    printf("%c", c);
-                }
-                if(c=='\n'){
-                    printf("\n");
-                cont++;
-                }
 
-            }
-            while(!feof(fp)){
-                c = fgetc(fp);
-                if(c=='\n'){
-                    printf("\n");
-                }
-                else{
-                    printf("%c", c);
-                }
-
+            aux = tam_mat_file(fp, &nl, &nc);
+            if(aux!=SUCCESS){
+                return ERROR;
             }
 
-            return SUCCESS;
+            *mat = criar_mat(nl, nc);
+
+            for(i=0; i<nl; i++){
+                for(j=0; j<nc; j++){
+                    fscanf(fp, "%d", &num);
+                    escrever_mat(*mat, i, j, num);
+                }
+            }
 
             fclose(fp);
 
+            return SUCCESS;
+
+
         }
-        else if (identify_type(argv) == IMM_FILE)
+        else if (identify_type(file) == IMM_FILE)
         {
-            printf("Abrir %s\n", argv);
+            printf("Abrir %s\n", file);
         }
           
     }
@@ -123,5 +114,38 @@
         {//Caso nao seja nenhum dos 2
             return INCONSISTENT_FILE;
         }
+
+    }
+
+ /*    int print_file(char *file){
+        int cont=0;
+        char c;
+        while(cont<3){
+            c = fgetc(fp);
+            if(c==' '){
+                printf(" ");
+            }
+            else{
+                printf("%c", c);
+            }
+            if(c=='\n'){
+                printf("\n");
+            cont++;
+            }
+
+        }
+        while(!feof(fp)){
+            c = fgetc(fp);
+            if(c=='\n'){
+                printf("\n");
+            }
+            else{
+                printf("%c", c);
+            }
+
+        }
+    } */
+
+    int tam_mat_file(char *file, int *nl, int *nc){
 
     }

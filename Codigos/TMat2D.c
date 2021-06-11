@@ -1,3 +1,4 @@
+#include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
 #include "TMat2D.h"
@@ -221,4 +222,20 @@
             }
             return 0;
         }
+    }
+
+    int print_matriz(TadMat *p, double *val){
+        if(p==NULL){
+            return -1;
+        }
+        int i, j;
+        printf("\n");
+        for(i=0; i<p->nlinhas; i++){
+            for(j=0; j<p->ncolunas; j++){
+                acessar_mat(p, i, j, val);
+                printf("%5.1lf ", *val);
+            }
+            printf("\n");
+        }
+        return 0;
     }

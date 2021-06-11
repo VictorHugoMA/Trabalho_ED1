@@ -21,3 +21,5 @@ int traco_mat(TadMat *m1, double *tot);
 int somaL_mat(TadMat *m1, double **sl);
 
 int somaC_mat(TadMat *m1, double **sc);
+
+int print_matriz(TadMat *p, double *val);
