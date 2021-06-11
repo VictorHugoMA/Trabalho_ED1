@@ -2,7 +2,6 @@
 #include<string.h>
 #include<stdlib.h>
 #include"TArquivos.h"
-#include"TMat2D.h"
     
     int open_file(char *file, TadMat **mat){
         FILE *fp;
@@ -75,7 +74,7 @@
         TadMat *mat;
 
         open_file(fileIN, &mat);
-        mat_to_file(fileOUT, mat);
+        mat_to_file(mat, fileOUT);
 
     }
 
@@ -117,7 +116,7 @@
 
         FILE *fp;
 
-        int aux, nl, nc, i, j, num;  
+        int aux, i, j, num;  
 
         if (identify_type(file) == TXT_FILE)
         {

@@ -13,7 +13,7 @@
     int main(int argc, char *argv[]){
 
         if(strcmp(argv[1], "-open")==0){
-            open_file(argv[2]);
+            print_file(argv[2]);
 
         }
         else if(strcmp(argv[1], "-convert")==0){
