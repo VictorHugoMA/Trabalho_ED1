@@ -23,6 +23,11 @@
                 return ERROR;
             }
 
+            /* 
+            nl=32;
+            nc=23; 
+            */
+
             *mat = criar_mat(nl, nc);
 
             for(i=0; i<nl; i++){
@@ -158,7 +163,4 @@
         free_mat(mat);
 
         return SUCCESS;
-    } 
-
-
-
+    }
