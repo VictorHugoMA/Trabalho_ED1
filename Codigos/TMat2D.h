@@ -1,3 +1,6 @@
+#ifndef _TMat2D_
+#define _TMat2D_
+
 typedef struct TadMat TadMat;
 
 TadMat *criar_mat(int nlin, int ncol);
@@ -23,3 +26,5 @@ int somaL_mat(TadMat *m1, int **sl);
 int somaC_mat(TadMat *m1, int **sc);
 
 int print_matriz(TadMat *p);
+
+#endif
