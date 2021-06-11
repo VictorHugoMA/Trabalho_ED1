@@ -6,7 +6,7 @@
     struct TadMat{
         int nlinhas;
         int ncolunas; 
-        double *dado;
+        int *dado;
     };
     //Cria a matriz
     //dado o numero de linhas e colunas
@@ -20,7 +20,7 @@
         
         mat->nlinhas = nlin;
         mat->ncolunas = ncol;
-        mat->dado = malloc((nlin*ncol)*sizeof(double));
+        mat->dado = malloc((nlin*ncol)*sizeof(int));
 
         if(mat->dado==NULL){
             free(mat);
@@ -46,7 +46,7 @@
     //Escreve um valor na posicao desejada da matriz
     //dado o ponteiro para a struct, a posicao(linha e coluna) e o valor 
     //Retorno -1 para erro e 0 para sucesso
-    int escrever_mat(TadMat *mat, int nlin, int ncol, double val){
+    int escrever_mat(TadMat *mat, int nlin, int ncol, int val){
         if(mat==NULL)
             return -1;
 
@@ -60,9 +60,9 @@
     }
 
     //Acessa uma posicao da matriz
-    //dado o ponteiro para a struct, a posicao(linha e coluna), e um ponteiro para double(aux)
+    //dado o ponteiro para a struct, a posicao(linha e coluna), e um ponteiro para int(aux)
     //Retorno -1 para erro e 0 para sucesso
-    int acessar_mat(TadMat *mat, int lin, int col, double *val){
+    int acessar_mat(TadMat *mat, int lin, int col, int *val){
         if(mat==NULL)
             return -1;
 
@@ -79,14 +79,14 @@
     //Preenche uma matriz com valores aleatorios
     //dado o ponteiro para a struct e o valor maximo de preenchimento
     //Retorno -1 para erro e 0 para sucesso
-    int preencher_mat(TadMat *mat, double max){
+    int preencher_mat(TadMat *mat, int max){
         if(mat==NULL)
             return -1;
 
         else{
             srand(time(NULL));
             for(int i=0; i<mat->nlinhas*mat->ncolunas; i++){
-                mat->dado[i]=(rand()/(double)RAND_MAX)*max;
+                mat->dado[i]=(rand()/(int)RAND_MAX)*max;
             }
             return 0;
         }
@@ -119,7 +119,7 @@
         }
         else{
             int i, j, k, pos1, pos2, pos3;
-            double total=0;
+            int total=0;
 
             for(i=0; i<m1->nlinhas; i++){
 		        for(j=0; j<m2->ncolunas; j++){
@@ -142,7 +142,7 @@
     //Multiplica uma matriz por um numero
     //dado o ponteiro para a struct, ponteiro para a struct resultado e o valor a ser multiplicado
     //Retorno -1 para erro e 0 para sucesso
-    int multConst_mat(TadMat *m1, TadMat *tm, double num){
+    int multConst_mat(TadMat *m1, TadMat *tm, int num){
         if(m1==NULL){
             return -1;
         }
@@ -156,16 +156,16 @@
     }
 
     //Traco ou soma da diagonal principal de uma matriz
-    //dado o ponteiro para a struct e o ponterio de double para receber a soma
+    //dado o ponteiro para a struct e o ponterio de int para receber a soma
     //Retorno -1 para erro e 0 para sucesso
-    int traco_mat(TadMat *m1, double *tot){
+    int traco_mat(TadMat *m1, int *tot){
 
         if(m1==NULL){
             return -1;
         }
         else{
             int i, j, pos;
-            double dp;
+            int dp;
             for(i=0; i<m1->nlinhas; i++){
                 for(j=0; j<m1->ncolunas; j++){
                     if(i==j){
@@ -182,14 +182,14 @@
     //Vetor com a soma das linahs
     //dado o ponteiro para a struct e o endereco de um ponteiro que sera o vetor
     //Retorno -1 para erro e 0 para sucesso
-    int somaL_mat(TadMat *m1, double **sl){
+    int somaL_mat(TadMat *m1, int **sl){
             if(m1==NULL){
                 return -1;
             }
             else{
                 int i, j, pos;
             
-                *sl=calloc(m1->nlinhas, sizeof(double));
+                *sl=calloc(m1->nlinhas, sizeof(int));
                 
                 for(i=0; i<m1->nlinhas; i++){
                     for(j=0; j<m1->ncolunas; j++){
@@ -205,14 +205,14 @@
     //Vetor com a soma das colunas
     //dado o ponteiro para a struct e o endereco de um ponteiro que sera o vetor
     //Retorno -1 para erro e 0 para sucesso
-    int somaC_mat(TadMat *m1, double **sc){
+    int somaC_mat(TadMat *m1, int **sc){
         if(m1==NULL){
             return -1;
         }
         else{
             int i, j, pos;
 
-            *sc=calloc(m1->ncolunas, sizeof(double));
+            *sc=calloc(m1->ncolunas, sizeof(int));
 
             for(i=0; i<m1->nlinhas; i++){
                 for(j=0; j<m1->ncolunas; j++){
@@ -224,7 +224,7 @@
         }
     }
 
-    int print_matriz(TadMat *p, double *val){
+    int print_matriz(TadMat *p, int *val){
         if(p==NULL){
             return -1;
         }
@@ -233,7 +233,7 @@
         for(i=0; i<p->nlinhas; i++){
             for(j=0; j<p->ncolunas; j++){
                 acessar_mat(p, i, j, val);
-                printf("%5.1lf ", *val);
+                printf("%d ", *val);
             }
             printf("\n");
         }
