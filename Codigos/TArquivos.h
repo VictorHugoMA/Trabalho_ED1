@@ -8,6 +8,8 @@
 #define IMM_FILE 8
 #define INCONSISTENT_FILE 10
 
+#include"TMat2D.h"
+
 int open_file(char *argv, TadMat **mat);
 
 int convert_file(char *argv1, char *argv2);

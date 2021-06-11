@@ -2,7 +2,6 @@
 #include<string.h>
 #include<stdlib.h>
 #include"TArquivos.h"
-#include"TMat2D.h"
     
     int open_file(char *file, TadMat **mat){
         FILE *fp;
@@ -19,10 +18,15 @@
                 return INVALID_NULL_POINTER;
             }
 
-            aux = tam_mat_file(fp, &nl, &nc);
+            aux = tam_mat_file(file, &nl, &nc);
             if(aux!=SUCCESS){
                 return ERROR;
             }
+
+            /* 
+            nl=32;
+            nc=23; 
+            */
 
             *mat = criar_mat(nl, nc);
 
@@ -75,7 +79,7 @@
         TadMat *mat;
 
         open_file(fileIN, &mat);
-        mat_to_file(fileOUT, mat);
+        mat_to_file(mat, fileOUT);
 
     }
 
@@ -117,7 +121,7 @@
 
         FILE *fp;
 
-        int aux, nl, nc, i, j, num;  
+        int aux, i, j, num;  
 
         if (identify_type(file) == TXT_FILE)
         {
@@ -159,7 +163,4 @@
         free_mat(mat);
 
         return SUCCESS;
-    } 
-
-
-
+    }
