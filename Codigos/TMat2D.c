@@ -233,7 +233,7 @@
         for(i=0; i<p->nlinhas; i++){
             for(j=0; j<p->ncolunas; j++){
                 acessar_mat(p, i, j, &val);
-                printf("\t%d ", val);
+                printf("%3d ", val);
             }
             printf("\n");
         }

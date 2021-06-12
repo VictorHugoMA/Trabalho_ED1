@@ -18,16 +18,16 @@
                 return INVALID_NULL_POINTER;
             }
 
-            /* aux = tam_mat_file(file, &nl, &nc);
+            aux = tam_mat_file(file, &nl, &nc);
             if(aux!=SUCCESS){
                 return ERROR;
-            } */
+            }
 
-            
-            //para testar sem o tam_mat_file (GIMP: 32 linhas, 23 colunas)
-            nl=32;
-            nc=23; 
-           
+           /*  
+            //para testar sem o tam_mat_file (GIMP: 23 linhas, 32 colunas)
+            nl=23;
+            nc=32; 
+            */
 
             *mat = criar_mat(nl, nc);
 
