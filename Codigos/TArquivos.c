@@ -18,15 +18,16 @@
                 return INVALID_NULL_POINTER;
             }
 
-            aux = tam_mat_file(file, &nl, &nc);
+            /* aux = tam_mat_file(file, &nl, &nc);
             if(aux!=SUCCESS){
                 return ERROR;
-            }
+            } */
 
-            /* 
+            
+            //para testar sem o tam_mat_file (GIMP: 32 linhas, 23 colunas)
             nl=32;
             nc=23; 
-            */
+           
 
             *mat = criar_mat(nl, nc);
 
@@ -77,10 +78,21 @@
         printf("Converte %s para %s\n", fileIN, fileOUT);
 
         TadMat *mat;
+        int aux;
 
-        open_file(fileIN, &mat);
-        mat_to_file(mat, fileOUT);
+        aux = open_file(fileIN, &mat);
 
+        if(aux==SUCCESS){
+            aux = mat_to_file(mat, fileOUT);
+
+            if(aux==SUCCESS)
+                return SUCCESS;
+
+        }
+        else{
+            return ERROR;
+        }
+        
     }
 
     int segment_imm(char *argv1, char *argv2, char *argv3){
@@ -101,11 +113,11 @@
 
         tamanho = strlen(file); //Recebe o tamanho da string, para verificar cada caracter 
 
-        if (file[tamanho-3] == 't' && file[tamanho-2] == 'x' && file[tamanho-1] == 't')
+        if (tamanho>4 && file[tamanho-4] == '.' && file[tamanho-3] == 't' && file[tamanho-2] == 'x' && file[tamanho-1] == 't')
         {//Analisa cada caracter da string para conferir se eh "txt"
             return TXT_FILE;
         }
-        else if (file[tamanho-3] == 'i' && file[tamanho-2] == 'm' && file[tamanho-1] == 'm')
+        else if (tamanho>4 && file[tamanho-4] == '.' && file[tamanho-3] == 'i' && file[tamanho-2] == 'm' && file[tamanho-1] == 'm')
         {//Analisa cada caracter da string para conferir se eh "imm"
             return IMM_FILE;
         }
@@ -128,7 +140,7 @@
             fp = fopen(file, "r");
             if (fp == NULL)
             {
-                return ERROR;
+                return INVALID_NULL_POINTER;
             }
             
         }
@@ -143,6 +155,40 @@
 
 
     int mat_to_file(TadMat *mat, char *fileOUT){
+
+        FILE *fp;
+        int num, nl, nc, i, j;
+
+        nl_nc_mat(mat, &nl, &nc);
+
+        if(identify_type(fileOUT)==TXT_FILE){
+
+        }
+        else if(identify_type(fileOUT)==IMM_FILE){
+            
+            fp = fopen(fileOUT, "wb");
+            if(fp==NULL){
+                return INVALID_NULL_POINTER;
+            }
+
+            fwrite(&nl, sizeof(int), 1, fp);
+            fwrite(&nc, sizeof(int), 1, fp);
+
+            for(i=0; i<nl; i++){
+                for(j=0; j<nc; j++){
+                    acessar_mat(mat, i, j, &num);
+                    fwrite(&num, sizeof(int), 1, fp);
+                }
+            }
+
+            fclose(fp);
+            return SUCCESS;
+
+        }
+        else{
+            return INCONSISTENT_FILE;
+        }
+        
 
 
     }
