@@ -21,7 +21,15 @@
 
         }
         else if(strcmp(argv[1], "-convert")==0){
-            convert_file(argv[2], argv[3]);
+            aux = convert_file(argv[2], argv[3]);
+
+            if(aux==SUCCESS)
+                printf("Conversao feitao com sucesso\n");
+            else{
+                printf("Erro\n");
+            }
+
+
         }
         else if(strcmp(argv[1], "-segment")==0){
             segment_imm(argv[2], argv[3], argv[4]);
