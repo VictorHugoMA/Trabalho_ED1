@@ -239,3 +239,14 @@
         }
         return 0;
     }
+
+    int nl_nc_mat(TadMat *mat, int *nl, int *nc){
+        if(mat==NULL){
+            return -1;
+        }
+        
+        *nl = mat->nlinhas;
+        *nc = mat->ncolunas;
+
+        return 0;
+    }

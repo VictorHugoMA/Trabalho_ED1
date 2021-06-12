@@ -27,4 +27,6 @@ int somaC_mat(TadMat *m1, int **sc);
 
 int print_matriz(TadMat *p);
 
+int nl_nc_mat(TadMat *mat, int *nl, int *nc);
+
 #endif
