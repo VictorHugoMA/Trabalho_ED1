@@ -5,7 +5,7 @@
 
 /*  Caminhos para os arquivos
 
-    Victor: "C:\\Trabalho_ED1\\Trabalho_ED1\\Arquivos\\GIMP.txt"
+    Victor: "Arquivos\\GIMP.txt"
     Pedro: "C:\\Users\\Zorak\\OneDrive\\Documentos\\trab\\Trabalho_ED1\\Arquivos\\GIMP.pgm"
 
 */
