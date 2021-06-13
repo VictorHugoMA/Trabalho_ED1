@@ -163,8 +163,28 @@
         nl_nc_mat(mat, &nl, &nc);
 
         if(identify_type(fileOUT)==TXT_FILE){
+            
+            fp = fopen(fileOUT, "w");
+            if(fp==NULL){
+                return INVALID_NULL_POINTER;
+            }
+
+            for(i=0; i<nl; i++){
+                for(j=0; j<nc; j++){
+                    acessar_mat(mat, i, j, &num);
+                    fprintf(fp, "%3d", num);
+
+                    if(j!=nc-1){
+                        fprintf(fp, " ");
+                    }
+                }
+                fprintf(fp, "\n");
+            }
+            fclose(fp);
+            return SUCCESS;
 
         }
+
         else if(identify_type(fileOUT)==IMM_FILE){
             
             fp = fopen(fileOUT, "wb");
