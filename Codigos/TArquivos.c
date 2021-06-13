@@ -178,7 +178,9 @@
                         fprintf(fp, " ");
                     }
                 }
-                fprintf(fp, "\n");
+                if(i!=nl-1){
+                    fprintf(fp, "\n");
+                }            
             }
             fclose(fp);
             return SUCCESS;
