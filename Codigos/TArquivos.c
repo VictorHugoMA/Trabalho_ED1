@@ -96,8 +96,39 @@
         
     }
 
-    int segment_imm(char *argv1, char *argv2, char *argv3){
-        printf("Faz o thresholding com um valor %s da imagem %s e escreve o resultado em %s\n", argv1, argv2, argv3);
+    int segment_file(int thr, char *fileIN, char *fileSEG){
+        printf("Faz o thresholding com um valor %d da imagem %s e escreve o resultado em %s\n", thr, fileIN, fileSEG);
+
+        TadMat *mat;
+        int i, j, nl, nc, num, aux;
+
+        aux = open_file(fileIN, &mat);
+
+        if(aux!=SUCCESS)
+            return ERROR;
+        
+        nl_nc_mat(mat, &nl, &nc);
+
+        for(i=0; i<nl; i++){
+            for(j=0; j<nc; j++){
+                acessar_mat(mat, i, j, &num);
+
+                    if(num>thr){
+                        escrever_mat(mat, i, j, 1);
+                    }
+                    else{
+                        escrever_mat(mat, i, j, 0);
+                    }
+
+            }
+        }
+
+        mat_to_file(mat, fileSEG);
+
+        free_mat(mat);
+
+        return SUCCESS;
+
     }
 
     int cc_imm(char *argv1, char *argv2){

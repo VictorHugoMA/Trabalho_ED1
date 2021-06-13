@@ -10,11 +10,11 @@
 
 #include"TMat2D.h"
 
-int open_file(char *argv, TadMat **mat);
+int open_file(char *file, TadMat **mat);
 
-int convert_file(char *argv1, char *argv2);
+int convert_file(char *fileIN, char *fileOUT);
 
-int segment_imm(char *argv1, char *argv2, char *argv3);
+int segment_file(int thr, char *fileIN, char *fileSEG);
 
 int cc_imm(char *argv1, char *argv2);
 
