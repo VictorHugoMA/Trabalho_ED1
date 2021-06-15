@@ -137,9 +137,13 @@ int cc_imm(char *fileSEG, char *fileOUT)
 {
     
     Stack *st;
-    TadMat *img, *img_rot;
-    ponto vetp[4], base;
-    int nl, nc, i, j, k, valA, valB, rotulo = 0;
+    TadMat *img;
+    TadMat *img_rot;
+    ponto vetp[4];
+    ponto base;
+    int nl, nc, i, j, k;
+    int valA, valB;
+    int rotulo = 0;
     
 
     open_file(fileSEG, &img); // Abre o arquivo segmentado 
@@ -147,7 +151,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
     nl_nc_mat(img, &nl, &nc); // Recebe numero de linhas e colunas
     img_rot = criar_mat(nl, nc); // Cria imagem de contrução com as mesmas proporções da original
 
-    preencher_mat(img_rot, 0); // Preenche a img com zeros
+    escrever_mat(img_rot, nl, nc, 0); // Preenche a img com zeros
 
     st = stack_create();
 
@@ -215,6 +219,107 @@ int cc_imm(char *fileSEG, char *fileOUT)
 
     return SUCCESS;
 }
+
+//Funcao labirinto 
+int labirinto(char *fileIn, char *fileOUT)
+{
+
+    Stack *st;
+    TadMat *img;
+    TadMat *img_rot;
+    ponto inicio;
+    ponto atual;
+    ponto vetp[4]; //Especial para coordenadas vizinhas
+    int i, j;
+    int nl, nc;
+    int val, valA, valB;
+    int x, y;
+
+    open_file(fileIn, &img); //Abre o arquivo com o Binario
+
+    nl_nc_mat(img, &nl, &nc); //Recebe numero de linhas e colunas
+    img_rot = criar_mat(nl ,nc); //Cria img de construcao semelhante a original
+    escrever_mat(img_rot, nl, nc, 0); //Preenche a img_rot com zeros
+
+    st = stack_create();
+
+    //Recebe a posicao do inicio do labirinto na TadMat img
+    for(i = 0; i < nl; i++)
+    {
+        acessar_mat(img, i, 0, &val);
+        if(val == 1)
+        {
+            inicio.x = i;
+            inicio.y = 0;
+            break;
+        }
+    }
+
+    stack_push(st, inicio);
+    escrever_mat(img_rot, inicio.x, inicio.y, 2);
+
+    atual.x = inicio.x;
+    atual.y = inicio.y + 1;
+    escrever_mat(img_rot, atual.x, atual.y, 2); // m_insert_int
+
+    while(atual.y != nc-1)//Enquanto nao chegar na ultima coluna
+    {
+        vetp[0].x= atual.x ;
+        vetp[0].y= atual.y-1;
+        vetp[1].x= atual.x-1;
+        vetp[1].y= atual.y;
+        vetp[2].x= atual.x;
+        vetp[2].y= atual.y+1;
+        vetp[3].x= atual.x+1;
+        vetp[3].y= atual.y;
+
+        for(i = 0; i < 4; i++)
+        {
+            x = vetp[i].x;//Faz a rotacao x
+            y = vetp[i].y;//Faz a rotacao y
+
+            acessar_mat(img, x, y, &valA);//(m_select_int)Pega um valor na matriz original
+            acessar_mat(img_rot, x, y, &valB);//Pega o mesmo valor na mesma pos da em contrucao
+
+            if(valA == 1 && valB == 0)//Se houver um caminho valido(1), rotula e anda no primeiro que achar
+            {
+                stack_push(st, vetp[i]);//Empilha a posicao
+                escrever_mat(img_rot, x , y, 2);//Insere 2 na matriz
+                atual = vetp[i];//Atual recebe o ponto de chegada
+                break;
+            }
+            else
+            {
+                if(i == 3)//Significa que nao ha nenhum a ser percorrido, volta para o ponto anterior
+                {
+                    escrever_mat(img_rot, atual.x, atual.y, 1);//Insere na matriz em contrucao as posicoes atuais
+                    stack_pop(st);//As posicoes salvas sa oretiradas da pilha
+                    stack_top(st, &atual);//Logo em seguida eh consultado e passado para o atual um novo valor que eh a ultima posicao da pilha
+                }
+            }
+        }
+    }
+
+    //Remove os caminhos sem fim rotulados de 1.Atribui a essas posicoes o valor 0.
+    for(i = 0; i < nl; i++)
+    {
+        for(j = 0; j < nc; j++)
+        {
+            acessar_mat(img_rot, i, j, &val);//Pega um valor na posicao
+
+            if(val != 2 && val != 0)//Caso for 2 eh limpado
+                escrever_mat(img_rot, i, j, 0);//Inserindo 0
+        }
+    }
+
+    mat_to_file(fileOUT, img_rot);
+
+    free_mat(img);
+    free_mat(img_rot);
+    stack_free(st);
+    return SUCCESS;
+}
+
 
 
 int lab_txt(char *argv1, char *argv2)
