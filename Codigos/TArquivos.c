@@ -132,14 +132,24 @@ int segment_file(int thr, char *fileIN, char *fileSEG)
     return SUCCESS;
 }
 
-int cc_imm(char *argv1, char *argv2)
+int cc_imm(char *fileSEG, char *fileOUT)
 {
-    printf("Detecta os componentes conexos de %s e sai para %s\n", argv1, argv2);
+    printf("Detecta os componentes conexos de %s e sai para %s\n", fileSEG, fileOUT);
+    list *l;
+
+    l = list_creat();
+
+    list_free(l);
+
+    return SUCCESS;
+
 }
 
 int lab_txt(char *argv1, char *argv2)
 {
     printf("Recebe um labirinto %s e mostra o caminho em %s\n", argv1, argv2);
+
+    int label = 1;
 }
 
 
