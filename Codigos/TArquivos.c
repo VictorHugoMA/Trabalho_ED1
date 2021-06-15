@@ -234,6 +234,7 @@ int lab_file(char *fileIn, char *fileOUT)
 
     st = stack_create();
 
+    printf("Teste 1\n");
     //Recebe a posicao do inicio do labirinto na TadMat img
     for(i = 0; i < nl; i++)
     {
@@ -245,6 +246,7 @@ int lab_file(char *fileIn, char *fileOUT)
             break;
         }
     }
+    printf("Teste 2\n");
 
     stack_push(st, inicio);
     escrever_mat(img_rot, inicio.x, inicio.y, 2);
@@ -253,6 +255,7 @@ int lab_file(char *fileIn, char *fileOUT)
     atual.y = inicio.y + 1;
     escrever_mat(img_rot, atual.x, atual.y, 2); // m_insert_int
 
+    printf("Teste 3\n");
     while(atual.y != nc-1)//Enquanto nao chegar na ultima coluna
     {
         vetp[0].x= atual.x ;
@@ -264,6 +267,7 @@ int lab_file(char *fileIn, char *fileOUT)
         vetp[3].x= atual.x+1;
         vetp[3].y= atual.y;
 
+        printf("Teste 4\n");
         for(i = 0; i < 4; i++)
         {
             x = vetp[i].x;//Faz a rotacao x
@@ -279,18 +283,17 @@ int lab_file(char *fileIn, char *fileOUT)
                 atual = vetp[i];//Atual recebe o ponto de chegada
                 break;
             }
-            else
+            else if(i == 3)//Significa que nao ha nenhum a ser percorrido, volta para o ponto anterior
             {
-                if(i == 3)//Significa que nao ha nenhum a ser percorrido, volta para o ponto anterior
-                {
-                    escrever_mat(img_rot, atual.x, atual.y, 1);//Insere na matriz em contrucao as posicoes atuais
-                    stack_pop(st);//As posicoes salvas sa oretiradas da pilha
-                    stack_top(st, &atual);//Logo em seguida eh consultado e passado para o atual um novo valor que eh a ultima posicao da pilha
-                }
+                escrever_mat(img_rot, atual.x, atual.y, 1);//Insere na matriz em contrucao as posicoes atuais
+                stack_pop(st);//As posicoes salvas sa oretiradas da pilha
+                stack_top(st, &atual);//Logo em seguida eh consultado e passado para o atual um novo valor que eh a ultima posicao da pilha
             }
+            
         }
     }
 
+    printf("Teste 5\n");
     //Remove os caminhos sem fim rotulados de 1.Atribui a essas posicoes o valor 0.
     for(i = 0; i < nl; i++)
     {
@@ -304,6 +307,7 @@ int lab_file(char *fileIn, char *fileOUT)
     }
 
     mat_to_file(img_rot, fileOUT);
+    printf("Teste 6\n");
 
     free_mat(img);
     free_mat(img_rot);
