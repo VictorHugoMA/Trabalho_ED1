@@ -217,25 +217,20 @@ int cc_imm(char *fileSEG, char *fileOUT)
 }
 
 //Funcao labirinto 
-int labirinto(char *fileIn, char *fileOUT)
+int lab_txt(char *fileIn, char *fileOUT)
 {
 
     Stack *st;
-    TadMat *img;
-    TadMat *img_rot;
-    ponto inicio;
-    ponto atual;
-    ponto vetp[4]; //Especial para coordenadas vizinhas
-    int i, j;
-    int nl, nc;
-    int val, valA, valB;
-    int x, y;
+    TadMat *img, *img_rot;
+    ponto inicio, atual, vetp[4]; //Especial para coordenadas vizinhas
+    int i, j, nl, nc, val, valA, valB, x, y;
 
     open_file(fileIn, &img); //Abre o arquivo com o Binario
 
     nl_nc_mat(img, &nl, &nc); //Recebe numero de linhas e colunas
     img_rot = criar_mat(nl ,nc); //Cria img de construcao semelhante a original
-    escrever_mat(img_rot, nl, nc, 0); //Preenche a img_rot com zeros
+    
+    preencher_mat(img_rot, 0); //Preenche a img_rot com zeros
 
     st = stack_create();
 
@@ -308,21 +303,12 @@ int labirinto(char *fileIn, char *fileOUT)
         }
     }
 
-    mat_to_file(fileOUT, img_rot);
+    mat_to_file(img_rot, fileOUT);
 
     free_mat(img);
     free_mat(img_rot);
     stack_free(st);
     return SUCCESS;
-}
-
-
-
-int lab_txt(char *argv1, char *argv2)
-{
-    printf("Recebe um labirinto %s e mostra o caminho em %s\n", argv1, argv2);
-
-    int label = 1;
 }
 
 
