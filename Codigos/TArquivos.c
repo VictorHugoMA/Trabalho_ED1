@@ -132,18 +132,94 @@ int segment_file(int thr, char *fileIN, char *fileSEG)
     return SUCCESS;
 }
 
+
 int cc_imm(char *fileSEG, char *fileOUT)
 {
-    printf("Detecta os componentes conexos de %s e sai para %s\n", fileSEG, fileOUT);
-    list *l;
+    
+    Stack *st;
+    TadMat *img;
+    TadMat *img_rot;
+    ponto vetp[4];
+    ponto base;
+    int nl, nc, i, j, k;
+    int valA, valB;
+    int rotulo = 0;
+    
 
-    l = list_creat();
+    open_file(fileSEG, &img); // Abre o arquivo segmentado 
 
-    list_free(l);
+    nl_nc_mat(img, &nl, &nc); // Recebe numero de linhas e colunas
+    img_rot = criar_mat(nl, nc); // Cria imagem de contrução com as mesmas proporções da original
+
+    escrever_mat(img_rot, nl, nc, 0); // Preenche a img com zeros
+
+    st = stack_create();
+
+    for(i = 0; i < nl; i++)
+    {
+        for(j = 0; j < nc; j++)
+        {
+            acessar_mat(img, i, j, &valA);
+            acessar_mat(img_rot, i, j, &valB);
+
+            if(valA == 1 && valB == 0)//Estopim de procura do objeto 
+            {
+                rotulo++;
+
+                escrever_mat(img_rot, i, j, rotulo);
+
+                base.x = i;
+                base.y = j;
+
+                stack_push(st, base);
+
+                while(stack_size(st) > 0)
+                {
+                    vetp[0].x= base.x;
+                    vetp[0].y= base.y-1;
+                    vetp[1].x= base.x-1;
+                    vetp[1].y= base.y;
+                    vetp[2].x= base.x;
+                    vetp[2].y= base.y+1;
+                    vetp[3].x= base.x+1;
+                    vetp[3].y= base.y;
+
+                    for(k = 0; k < 4; k++)
+                    {
+                        acessar_mat(img, vetp[k].x, vetp[k].y, &valA);
+                        acessar_mat(img_rot, vetp[k].x, vetp[k].y, &valB);
+                        if(valA == 1 && valB == 0)
+                        {
+                            escrever_mat(img_rot, vetp[k].x, vetp[k].y, rotulo);
+                            stack_push(st, vetp[k]);
+                            base = vetp[k];
+                            break;
+                        }
+                        else
+                        {
+                            if(k == 3)
+                            {
+                                stack_pop(st);
+                                stack_top(st, &base);
+                            }
+
+                            if(stack_size(st) == 1 && k == 3)
+                                stack_pop(st);
+                        }
+                    } 
+                }
+            }
+        }
+    }
+    mat_to_file(img_rot, fileOUT);
+
+    free_mat(img);
+    free_mat(img_rot);
+    stack_free(st);
 
     return SUCCESS;
-
 }
+
 
 int lab_txt(char *argv1, char *argv2)
 {
