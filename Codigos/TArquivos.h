@@ -9,6 +9,8 @@
 #define INCONSISTENT_FILE 10
 
 #include"TMat2D.h"
+#include"TStack.h"
+#include"Ponto.h"
 
 int open_file(char *file, TadMat **mat);
 
