@@ -20,15 +20,10 @@ int open_file(char *file, TadMat **mat)
             return INVALID_NULL_POINTER;
         }
 
-        /* aux = tam_mat_file(file, &nl, &nc);
+        aux = tam_mat_file(file, &nl, &nc);
             if(aux!=SUCCESS){
                 return ERROR;
-            } */
-
-        //para testar sem o tam_mat_file
-        //GIMP: 23 linhas, 32 colunas e Mat: 3 linhas, 4 colunoas
-        nl = 23;
-        nc = 32;
+            }
 
         *mat = criar_mat(nl, nc);
 
@@ -147,6 +142,7 @@ int lab_txt(char *argv1, char *argv2)
     printf("Recebe um labirinto %s e mostra o caminho em %s\n", argv1, argv2);
 }
 
+
 int identify_type(char *file)
 {
 
@@ -172,31 +168,25 @@ int tam_mat_file(char *file, int *nl, int *nc)
 {
 
     FILE *fp;
+    int aux, elementos = 0, nlin = 0, ncol = 0;
+    char atual, anterior;
 
-    int aux, elementos, exec = 1;
-    elementos = 0;
-    *nl = 0;
-
-    char atual,anterior;
     atual = ' ';
 
-
-        if (identify_type(file) == TXT_FILE)
+    if (identify_type(file) == TXT_FILE)
     {
         fp = fopen(file, "r");
         if (fp == NULL)
         {
             return INVALID_NULL_POINTER;
         }
-/*         fscanf(fp, "%i%c", &aux, &atual);
-        elementos++; */
 
-        while (exec)
+        while (1)
         {
             anterior = atual;
             elementos++;
 
-            fscanf(fp, "%i", &aux);
+            fscanf(fp, "%d", &aux);
             if (feof(fp))
             { 
                 break;
@@ -208,7 +198,7 @@ int tam_mat_file(char *file, int *nl, int *nc)
             }
             if (atual == '\n')
             {
-                (*nl)++;
+               nlin++;
             }
         }
 
@@ -217,26 +207,39 @@ int tam_mat_file(char *file, int *nl, int *nc)
         if (feof(fp))
         {
             if (anterior != '\n')
-                (*nl)++;
+                nlin++;
         }
 
-        *nc = elementos / *nl;
+        ncol = elementos / nlin;
+
+        *nl=nlin;
+        *nc=ncol;
 
         fclose(fp);
         return SUCCESS;
     }
     else if (identify_type(file) == IMM_FILE)
     {
+
         fp = fopen(file, "rb");
+        
         if(fp == NULL)
         {
             return ERROR;
         }
-        fscanf(fp,"%i %i",&nc, &nl);
+
+        fscanf(fp,"%d", &nlin);
+        fscanf(fp,"%d", &ncol);
+
+        *nl=nlin;
+        *nc=ncol;
 
         fclose(fp);
         return SUCCESS;
 
+    }
+    else{
+        return INCONSISTENT_FILE;
     }
 }
 
