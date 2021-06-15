@@ -137,13 +137,9 @@ int cc_imm(char *fileSEG, char *fileOUT)
 {
     
     Stack *st;
-    TadMat *img;
-    TadMat *img_rot;
-    ponto vetp[4];
-    ponto base;
-    int nl, nc, i, j, k;
-    int valA, valB;
-    int rotulo = 0;
+    TadMat *img, *img_rot;
+    ponto vetp[4], base;
+    int nl, nc, i, j, k, valA, valB, rotulo = 0;
     
 
     open_file(fileSEG, &img); // Abre o arquivo segmentado 
@@ -151,7 +147,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
     nl_nc_mat(img, &nl, &nc); // Recebe numero de linhas e colunas
     img_rot = criar_mat(nl, nc); // Cria imagem de contrução com as mesmas proporções da original
 
-    escrever_mat(img_rot, nl, nc, 0); // Preenche a img com zeros
+    preencher_mat(img_rot, 0); // Preenche a img com zeros
 
     st = stack_create();
 
