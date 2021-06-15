@@ -151,7 +151,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
     nl_nc_mat(img, &nl, &nc); // Recebe numero de linhas e colunas
     img_rot = criar_mat(nl, nc); // Cria imagem de contrução com as mesmas proporções da original
 
-    escrever_mat(img_rot, nl, nc, 0); // Preenche a img com zeros
+    preencher_mat(img_rot, 0); // Preenche a img com zeros
 
     st = stack_create();
 
@@ -212,6 +212,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
         }
     }
     mat_to_file(img_rot, fileOUT);
+    print_matriz(img_rot);
 
     free_mat(img);
     free_mat(img_rot);

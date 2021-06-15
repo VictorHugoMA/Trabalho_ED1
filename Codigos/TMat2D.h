@@ -11,7 +11,7 @@ int escrever_mat(TadMat *mat, int nlin, int ncol, int val);
 
 int acessar_mat(TadMat *mat, int nlin, int ncol, int *val);
 
-int preencher_mat(TadMat *mat, int max);
+int preencher_mat(TadMat *mat, int num);
 
 int soma_mat(TadMat *m1, TadMat *m2, TadMat *sm);
 

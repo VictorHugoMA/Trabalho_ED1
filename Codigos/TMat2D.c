@@ -76,17 +76,18 @@
         }
     }
 
-    //Preenche uma matriz com valores aleatorios
-    //dado o ponteiro para a struct e o valor maximo de preenchimento
+    //Preenche uma matriz com um valor
+    //dado o ponteiro para a struct e o valor de preenchimento
     //Retorno -1 para erro e 0 para sucesso
-    int preencher_mat(TadMat *mat, int max){
+    int preencher_mat(TadMat *mat, int num){
         if(mat==NULL)
             return -1;
 
         else{
-            srand(time(NULL));
             for(int i=0; i<mat->nlinhas*mat->ncolunas; i++){
-                mat->dado[i]=(rand()/(int)RAND_MAX)*max;
+
+                mat->dado[i]=num;
+
             }
             return 0;
         }
