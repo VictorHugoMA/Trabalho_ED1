@@ -137,13 +137,9 @@ int cc_imm(char *fileSEG, char *fileOUT)
 {
     
     Stack *st;
-    TadMat *img;
-    TadMat *img_rot;
-    ponto vetp[4];
-    ponto base;
-    int nl, nc, i, j, k;
-    int valA, valB;
-    int rotulo = 0;
+    TadMat *img, *img_rot;
+    ponto vetp[4], base;
+    int nl, nc, i, j, k, valA, valB, rotulo = 0;
     
 
     open_file(fileSEG, &img); // Abre o arquivo segmentado 
@@ -212,7 +208,6 @@ int cc_imm(char *fileSEG, char *fileOUT)
         }
     }
     mat_to_file(img_rot, fileOUT);
-    print_matriz(img_rot);
 
     free_mat(img);
     free_mat(img_rot);
