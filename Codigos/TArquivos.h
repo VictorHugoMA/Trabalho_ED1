@@ -20,7 +20,7 @@ int segment_file(int thr, char *fileIN, char *fileSEG);
 
 int cc_imm(char *argv1, char *argv2);
 
-int lab_txt(char *argv1, char *argv2);
+int lab_file(char *argv1, char *argv2);
 
 int print_file(char *file);
 

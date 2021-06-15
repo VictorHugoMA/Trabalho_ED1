@@ -217,7 +217,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
 }
 
 //Funcao labirinto 
-int lab_txt(char *fileIn, char *fileOUT)
+int lab_file(char *fileIn, char *fileOUT)
 {
 
     Stack *st;

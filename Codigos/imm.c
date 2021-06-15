@@ -17,7 +17,7 @@
             aux = print_file(argv[2]);
 
             if(aux!=SUCCESS)
-                printf("Erro\n");
+                printf("Erro na abertura do arquivo\n");
 
         }
         else if(strcmp(argv[1], "-convert")==0){
@@ -26,7 +26,7 @@
             if(aux==SUCCESS)
                 printf("Conversao feita com sucesso\n");
             else{
-                printf("Erro\n");
+                printf("Erro na conversao\n");
             }
 
 
@@ -39,17 +39,29 @@
             if(aux==SUCCESS)
                 printf("Segmentacao feita com sucesso\n");
             else{
-                printf("Erro\n");
+                printf("Erro na segmentacao\n");
             }
             
         }
 
         else if(strcmp(argv[1], "-cc")==0){
-            cc_imm(argv[2], argv[3]);
+            aux = cc_imm(argv[2], argv[3]);
+
+            if(aux==SUCCESS)
+                printf("Deteccao de componentes conexos feita com sucesso\n");
+            else{
+                printf("Erro da deteccao do componentes conexos\n");
+            }
         }
 
         else if(strcmp(argv[1], "-lab")==0){
-            lab_txt(argv[2], argv[3]);
+            aux = lab_file(argv[2], argv[3]);
+
+            if(aux==SUCCESS)
+                printf("Segmentacao feita com sucesso\n");
+            else{
+                printf("Erro na resolucao do labirinto\n");
+            }
         }
 
         else{
