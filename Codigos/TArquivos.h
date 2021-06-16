@@ -18,9 +18,9 @@ int convert_file(char *fileIN, char *fileOUT);
 
 int segment_file(int thr, char *fileIN, char *fileSEG);
 
-int cc_imm(char *argv1, char *argv2);
+int cc_imm(char *fileIN, char *fileOUT);
 
-int lab_file(char *argv1, char *argv2);
+int lab_file(char *fileIN, char *fileOUT);
 
 int print_file(char *file);
 
