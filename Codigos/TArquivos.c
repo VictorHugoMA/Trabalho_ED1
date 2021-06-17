@@ -8,15 +8,12 @@ int open_file(char *file, TadMat **mat)
     FILE *fp;
     int aux, nl, nc, i, j, num;
 
-    printf("Abrir %s\n", file);
-
     if (identify_type(file) == TXT_FILE)
     {
 
         fp = fopen(file, "r");
         if (fp == NULL)
         {
-            printf("Erro na abertura do arquivo\n");
             return INVALID_NULL_POINTER;
         }
 
@@ -46,7 +43,6 @@ int open_file(char *file, TadMat **mat)
         fp = fopen(file, "rb");
         if (fp == NULL)
         {
-            printf("Erro na abertura do arquivo\n");
             return INVALID_NULL_POINTER;
         }
         fread(&nl, sizeof(int), 1, fp);
@@ -74,7 +70,6 @@ int open_file(char *file, TadMat **mat)
 
 int convert_file(char *fileIN, char *fileOUT)
 {
-    printf("Converte %s para %s\n", fileIN, fileOUT);
 
     TadMat *mat;
     int aux;
@@ -96,7 +91,6 @@ int convert_file(char *fileIN, char *fileOUT)
 
 int segment_file(int thr, char *fileIN, char *fileSEG)
 {
-    printf("Faz o thresholding com um valor %d da imagem %s e escreve o resultado em %s\n", thr, fileIN, fileSEG);
 
     TadMat *mat;
     int i, j, nl, nc, num, aux;
@@ -139,10 +133,13 @@ int cc_imm(char *fileSEG, char *fileOUT)
     Stack *st;
     TadMat *img, *img_rot;
     ponto vetp[4], base;
-    int nl, nc, i, j, k, valA, valB, rotulo = 0;
+    int aux, nl, nc, i, j, k, valA, valB, rotulo = 0;
     
 
-    open_file(fileSEG, &img); // Abre o arquivo segmentado 
+    aux = open_file(fileSEG, &img); // Abre o arquivo segmentado 
+
+    if (aux != SUCCESS)
+        return ERROR;
 
     nl_nc_mat(img, &nl, &nc); // Recebe numero de linhas e colunas
     img_rot = criar_mat(nl, nc); // Cria imagem de contrução com as mesmas proporções da original
@@ -224,9 +221,12 @@ int cc_imm(char *fileSEG, char *fileOUT)
     Stack *st;
     TadMat *img, *img_rot;
     ponto inicio, atual, vetp[4];
-    int i, j, nl, nc, val, valA, valB, x, y,cont=1, nm;
+    int aux, i, j, nl, nc, val, valA, valB, x, y,cont=1, nm;
 
-    open_file(fileIn, &img); //Abre o arquivo com o Binario
+    aux = open_file(fileIn, &img); //Abre o arquivo com o Binario
+
+    if (aux != SUCCESS)
+        return ERROR;
 
     nl_nc_mat(img, &nl, &nc); //Recebe numero de linhas e colunas
     img_rot = criar_mat(nl ,nc); //Cria img de construcao semelhante a original
