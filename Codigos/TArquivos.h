@@ -7,6 +7,7 @@
 #define TXT_FILE 9
 #define IMM_FILE 8
 #define INCONSISTENT_FILE 10
+#define EXIT_NOT_FOUND 11
 
 #include"TMat2D.h"
 #include"TStack.h"
@@ -29,5 +30,7 @@ int identify_type(char *file);
 int tam_mat_file(char *file, int *nl, int *nc);
 
 int mat_to_file(TadMat *mat, char *fileOUT);
+
+int teste_lab(char *fileIN, char fileOUT);
 
 #endif
