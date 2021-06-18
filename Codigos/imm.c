@@ -58,7 +58,10 @@
             aux = lab_file(argv[2], argv[3]);
 
             if(aux==SUCCESS)
-                printf("Segmentacao feita com sucesso\n");
+                printf("Resolucao do labirinto feita com sucesso\n");
+            else if(aux==NO_WAY_OUT){
+                printf("Labirinto sem saida\n");
+            }
             else{
                 printf("Erro na resolucao do labirinto\n");
             }

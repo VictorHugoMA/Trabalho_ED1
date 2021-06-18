@@ -4,6 +4,7 @@
 #define SUCCESS 0
 #define INVALID_NULL_POINTER -1
 #define ERROR -2
+#define NO_WAY_OUT -15
 #define TXT_FILE 9
 #define IMM_FILE 8
 #define INCONSISTENT_FILE 10

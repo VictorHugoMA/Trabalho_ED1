@@ -225,7 +225,7 @@ int lab_file(char *fileIN, char *fileOUT)
     Stack *st;
     TadMat *img, *img_rot;
     ponto inicio, atual, vetp[4];
-    int aux, i, j, nl, nc, val, valA, valB, x, y,cont=1, nm, retorno;
+    int aux, i, j, nl, nc, val, valA, valB, x, y, retorno;
 
     aux = open_file(fileIN, &img); //Abre o arquivo com o Binario
 
@@ -306,7 +306,7 @@ int lab_file(char *fileIN, char *fileOUT)
 
 
     if(retorno == OUT_OF_RANGE){
-        return -15;
+        return NO_WAY_OUT;
     }
 
     //Remove os caminhos sem fim rotulados de 1.Atribui a essas posicoes o valor 0.
