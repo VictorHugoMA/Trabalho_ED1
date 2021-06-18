@@ -219,13 +219,13 @@ int cc_imm(char *fileSEG, char *fileOUT)
 
 
 //Funcao labirinto 
- int lab_file(char *fileIN, char *fileOUT)
+int lab_file(char *fileIN, char *fileOUT)
 {
 
     Stack *st;
     TadMat *img, *img_rot;
     ponto inicio, atual, vetp[4];
-    int aux, i, j, nl, nc, val, valA, valB, x, y,cont=1, nm;
+    int aux, i, j, nl, nc, val, valA, valB, x, y,cont=1, nm, retorno;
 
     aux = open_file(fileIN, &img); //Abre o arquivo com o Binario
 
@@ -254,12 +254,11 @@ int cc_imm(char *fileSEG, char *fileOUT)
     stack_push(st, inicio);
     escrever_mat(img_rot, inicio.x, inicio.y, 2);
 
-    atual.x = inicio.x;
-    atual.y = inicio.y + 1;
-    escrever_mat(img_rot, atual.x, atual.y, 2);
+    atual = inicio;
 
-    while(atual.y < nc)//Enquanto nao chegar na ultima coluna
-    {
+    while(atual.y != nc-1)//Enquanto nao chegar na ultima coluna
+    {               
+
         vetp[0].x= atual.x ;
         vetp[0].y= atual.y-1;
         vetp[1].x= atual.x-1;
@@ -273,6 +272,9 @@ int cc_imm(char *fileSEG, char *fileOUT)
         {
             x = vetp[i].x;//Faz a rotacao x
             y = vetp[i].y;//Faz a rotacao y
+            
+            if(y < 0 || y == nc || x < 0 || x == nl)
+                continue;
 
             acessar_mat(img, x, y, &valA);//(m_select_int)Pega um valor na matriz original
             acessar_mat(img_rot, x, y, &valB);//Pega o mesmo valor na mesma pos da em contrucao
@@ -287,14 +289,25 @@ int cc_imm(char *fileSEG, char *fileOUT)
             else if(i == 3)//Significa que nao ha nenhum a ser percorrido, volta para o ponto anterior
             {
                 escrever_mat(img_rot, atual.x, atual.y, 1);//Insere na matriz em contrucao as posicoes atuais
-                stack_pop(st);//As posicoes salvas sao retiradas da pilha
+                retorno = stack_pop(st);//As posicoes salvas sao retiradas da pilha
+
+                if(retorno == OUT_OF_RANGE){
+                    break;
+                }
+
                 stack_top(st, &atual);//Logo em seguida eh consultado e passado para o atual um novo valor que eh a ultima posicao da pilha
-            }
-            
+            } 
         }
-        atual.y++;
-        atual.x++;
-    } 
+
+        if(retorno == OUT_OF_RANGE){
+            break;
+        }
+    }
+
+
+    if(retorno == OUT_OF_RANGE){
+        return -15;
+    }
 
     //Remove os caminhos sem fim rotulados de 1.Atribui a essas posicoes o valor 0.
     for(i = 0; i < nl; i++)
