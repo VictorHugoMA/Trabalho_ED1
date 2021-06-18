@@ -5,51 +5,54 @@
 
 int open_file(char *file, TadMat **mat)
 {
+    // Declarando um ponteiro(link para o endereço da memória) para o arquivo de nome: 'fp' 
     FILE *fp;
     int aux, nl, nc, i, j, num;
 
-    if (identify_type(file) == TXT_FILE)
+    if (identify_type(file) == TXT_FILE)//Chama a identificacao pra saber se eh txt ou imm
     {
 
-        fp = fopen(file, "r");
-        if (fp == NULL)
+        fp = fopen(file, "r");//fp Recebe o arquivo aberto pra leitura em txt
+        if (fp == NULL)//Caso de erro
         {
             return INVALID_NULL_POINTER;
         }
 
-        aux = tam_mat_file(file, &nl, &nc);
-            if(aux!=SUCCESS){
+        aux = tam_mat_file(file, &nl, &nc);//Dado um arquivo ,devolve pelos parâmetros o número de linhas e colunas
+            if(aux!=SUCCESS){//Caso de erro
                 return ERROR;
             }
 
-        *mat = criar_mat(nl, nc);
+        *mat = criar_mat(nl, nc);//*mat recebe uma matriz vazia com nl e nc definidos
 
+        //Percorre a matriz/arquivo
         for (i = 0; i < nl; i++)
         {
             for (j = 0; j < nc; j++)
             {
-                fscanf(fp, "%d", &num);
-                escrever_mat(*mat, i, j, num);
+                fscanf(fp, "%d", &num);//Le as formatacoes das variaveis do arquivo
+                escrever_mat(*mat, i, j, num);//Escreve um valor na posicao desejada da matriz dado o **mat para struct, a posicao (linha e coluna), e o valor
             }
         }
-
+        //Fecha arquivo
         fclose(fp);
 
         return SUCCESS;
     }
-    else if (identify_type(file) == IMM_FILE)
+    else if (identify_type(file) == IMM_FILE)///Chama a identificacao pra saber se eh txt ou imm
     {
 
-        fp = fopen(file, "rb");
-        if (fp == NULL)
+        fp = fopen(file, "rb");//Abre o arquivo novamente para leitura
+        if (fp == NULL)//Caso de erro
         {
             return INVALID_NULL_POINTER;
         }
-        fread(&nl, sizeof(int), 1, fp);
-        fread(&nc, sizeof(int), 1, fp);
+        fread(&nl, sizeof(int), 1, fp);// Le em conteudo o valor da variável armazenada anteriormente fp(oposto "fwrite")
+        fread(&nc, sizeof(int), 1, fp);// Le em conteudo o valor da variável armazenada anteriormente fp
 
-        *mat = criar_mat(nl, nc);
+        *mat = criar_mat(nl, nc);//Cria espaco na memoria da matriz 
 
+        //Percorre a matriz preenchendo com os valores definidos 
         for (i = 0; i < nl; i++)
         {
             for (j = 0; j < nc; j++)
@@ -58,6 +61,7 @@ int open_file(char *file, TadMat **mat)
                 escrever_mat(*mat, i, j, num);
             }
         }
+        //Libera o arquivo
         fclose(fp);
         return SUCCESS;
     }
@@ -215,7 +219,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
 
 
 //Funcao labirinto 
- int lab_file(char *fileIn, char *fileOUT)
+ int lab_file(char *fileIN, char *fileOUT)
 {
 
     Stack *st;
@@ -223,7 +227,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
     ponto inicio, atual, vetp[4];
     int aux, i, j, nl, nc, val, valA, valB, x, y,cont=1, nm;
 
-    aux = open_file(fileIn, &img); //Abre o arquivo com o Binario
+    aux = open_file(fileIN, &img); //Abre o arquivo com o Binario
 
     if (aux != SUCCESS)
         return ERROR;
@@ -305,7 +309,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
     }
 
     mat_to_file(img_rot, fileOUT);
-
+    //Liberando
     free_mat(img);
     free_mat(img_rot);
     stack_free(st);
