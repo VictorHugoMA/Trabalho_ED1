@@ -32,6 +32,4 @@ int tam_mat_file(char *file, int *nl, int *nc);
 
 int mat_to_file(TadMat *mat, char *fileOUT);
 
-int teste_lab(char *fileIN, char fileOUT);
-
 #endif
