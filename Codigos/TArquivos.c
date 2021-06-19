@@ -217,8 +217,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
     return SUCCESS;
 }
 
-
-//Funcao labirinto 
+//fileIN -> labirinto  e fileOUT -> caminho do labirinto 
 int lab_file(char *fileIN, char *fileOUT)
 {
 
@@ -229,7 +228,7 @@ int lab_file(char *fileIN, char *fileOUT)
 
     aux = open_file(fileIN, &img); //Abre o arquivo com o Binario
 
-    if (aux != SUCCESS)
+    if (aux != SUCCESS)//Em caso de erro ao criar arquivo da matriz
         return ERROR;
 
     nl_nc_mat(img, &nl, &nc); //Recebe numero de linhas e colunas
@@ -237,11 +236,11 @@ int lab_file(char *fileIN, char *fileOUT)
     
     preencher_mat(img_rot, 0); //Preenche a img_rot com zeros
 
-    st = stack_create();
+    st = stack_create();//Cria a pilha
 
     //Recebe a posicao do inicio do labirinto na TadMat img
-    for(i = 0; i < nl; i++)
-    {
+    for(i = 0; i < nl; i++) 
+    {//Percorre a primeira coluna para achar o valor 1, ou seja analisa apenas as entradas do labirinto na primeira coluna
         acessar_mat(img, i, 0, &val);
         if(val == 1)
         {
@@ -251,13 +250,13 @@ int lab_file(char *fileIN, char *fileOUT)
         }
     }
 
-    stack_push(st, inicio);
-    escrever_mat(img_rot, inicio.x, inicio.y, 2);
+    stack_push(st, inicio);//Coloca o inicio do labirinto na pilha
+    escrever_mat(img_rot, inicio.x, inicio.y, 2);//na img_rot (caminho do labirinto), o inicio ja eh rotulado com 2 para comecar o caminho
 
     atual = inicio;
 
     while(atual.y != nc-1)//Enquanto nao chegar na ultima coluna
-    {               
+    {//Pesquisa os elementos envolta do elemento em que estiver analisando           
 
         vetp[0].x= atual.x ;
         vetp[0].y= atual.y-1;
@@ -273,11 +272,11 @@ int lab_file(char *fileIN, char *fileOUT)
             x = vetp[i].x;//Faz a rotacao x
             y = vetp[i].y;//Faz a rotacao y
             
-            if(y < 0 || y == nc || x < 0 || x == nl)
+            if(y < 0 || y == nc || x < 0 || x == nl)//Caso isso aconteca repete o for 
                 continue;
 
-            acessar_mat(img, x, y, &valA);//(m_select_int)Pega um valor na matriz original
-            acessar_mat(img_rot, x, y, &valB);//Pega o mesmo valor na mesma pos da em contrucao
+            acessar_mat(img, x, y, &valA);//Pega um valor na matriz original
+            acessar_mat(img_rot, x, y, &valB);//Pega o mesmo valor na mesma posicao da matriz em contrucao
 
             if(valA == 1 && valB == 0)//Se houver um caminho valido(1), rotula e anda no primeiro que achar
             {
@@ -289,9 +288,9 @@ int lab_file(char *fileIN, char *fileOUT)
             else if(i == 3)//Significa que nao ha nenhum a ser percorrido, volta para o ponto anterior
             {
                 escrever_mat(img_rot, atual.x, atual.y, 1);//Insere na matriz em contrucao as posicoes atuais
-                retorno = stack_pop(st);//As posicoes salvas sao retiradas da pilha
+                retorno = stack_pop(st);//As posicoes salvas sao retiradas da pilha, ou seja marca por onde ja passou
 
-                if(retorno == OUT_OF_RANGE){
+                if(retorno == OUT_OF_RANGE){//Caso nao tiver mais elementos envolta a ser percorrido
                     break;
                 }
 
@@ -299,13 +298,13 @@ int lab_file(char *fileIN, char *fileOUT)
             } 
         }
 
-        if(retorno == OUT_OF_RANGE){
+        if(retorno == OUT_OF_RANGE){//Caso nao tiver mais elementos envolta a ser percorrido durante o while
             break;
         }
     }
 
 
-    if(retorno == OUT_OF_RANGE){
+    if(retorno == OUT_OF_RANGE){//Caso de labirinto sem saidas
         return NO_WAY_OUT;
     }
 
@@ -321,10 +320,11 @@ int lab_file(char *fileIN, char *fileOUT)
         }
     }
 
-    mat_to_file(img_rot, fileOUT);
-    //Liberando
+    mat_to_file(img_rot, fileOUT);//Cria o arquivo img_rot como caminho do labirinto formado, retornando em fileOUT
+    //Liberando as matrizes
     free_mat(img);
     free_mat(img_rot);
+    //Libera a pilha
     stack_free(st);
     return SUCCESS;
 }
