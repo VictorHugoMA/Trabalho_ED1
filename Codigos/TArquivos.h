@@ -7,8 +7,7 @@
 #define NO_WAY_OUT -15
 #define TXT_FILE 9
 #define IMM_FILE 8
-#define INCONSISTENT_FILE 10
-#define EXIT_NOT_FOUND 11
+#define INCONSISTENT_FILE -10
 
 #include"TMat2D.h"
 #include"TStack.h"

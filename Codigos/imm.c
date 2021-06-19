@@ -3,12 +3,6 @@
 #include<stdlib.h>
 #include"TArquivos.h"
 
-/*  Caminhos para os arquivos
-
-    Victor: "Arquivos\\GIMP.txt"
-    Pedro: "Arquivos\\GIMP.pgm"
-
-*/
 
     int main(int argc, char *argv[]){
         int aux, thr;

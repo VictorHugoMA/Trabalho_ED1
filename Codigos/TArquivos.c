@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include "TArquivos.h"
 
+//Escreve o arquivo em uma matriz alocada dentro da funcao
+//Dado o arquivo e o pp da matriz
+//Retorna SUCCESS para sucesso, INVALID_NULL_POINTER, ERROR ou INCONSISTENT_FILE para erro
 int open_file(char *file, TadMat **mat)
 {
     // Declarando um ponteiro(link para o endereço da memória) para o arquivo de nome: 'fp' 
@@ -72,6 +75,9 @@ int open_file(char *file, TadMat **mat)
     }
 }
 
+//Convert um arquivo .txt em .imm ou vice-versa
+//Dado o arquivo de entrada e o arquivo de saida
+//Retorna SUCCESS para sucesso e ERROR para erro
 int convert_file(char *fileIN, char *fileOUT)
 {
 
@@ -93,6 +99,9 @@ int convert_file(char *fileIN, char *fileOUT)
     }
 }
 
+//Faz a limiarizacao de um arquivo de matriz, em que valores acima de thr se tornam 1 e abaixo 0
+//Dado o numero thr, o arquivo de entrada e o de saida
+//Retorna SUCCESS para sucesso e ERROR para erro
 int segment_file(int thr, char *fileIN, char *fileSEG)
 {
 
@@ -130,7 +139,9 @@ int segment_file(int thr, char *fileIN, char *fileSEG)
     return SUCCESS;
 }
 
-
+//Transforma um arquivo segmentado em um arquivo que mostra os componentes conexos
+//Dado o arquivo .imm segmentado e o arquivo de saida
+//Retorna SUCCESS para sucesso e ERROR para erro 
 int cc_imm(char *fileSEG, char *fileOUT)
 {
     
@@ -217,7 +228,9 @@ int cc_imm(char *fileSEG, char *fileOUT)
     return SUCCESS;
 }
 
-//fileIN -> labirinto  e fileOUT -> caminho do labirinto 
+//Faz a resolucao de um labirinto, se ela existir
+//Dado o arquivo com o labirinto e o arquivo de saida que sera a resolucao
+//Retorna SUCCESS para sucesso na resolucao, NO_WAY_OUT se nao houver saida e ERROR para erro
 int lab_file(char *fileIN, char *fileOUT)
 {
 
@@ -329,7 +342,9 @@ int lab_file(char *fileIN, char *fileOUT)
     return SUCCESS;
 }
 
-
+//Identifica o tipo do arquivo(.txt ou .imm)
+//Dado o arquivo
+//Retorna TXT_FILE para arquivo .txt, IMM_FILE para arquivo .imm ou INCONSISTENT_FILE caso nao seja nenhum dos dois
 int identify_type(char *file)
 {
 
@@ -351,6 +366,9 @@ int identify_type(char *file)
     }
 }
 
+//Consulta o numero de linhas e colunas de uma matriz em um arquivo e devolve esse numero por referencia
+//Dado o arquivo da matriz, e os enderecos do numero de linhas e colunas que receberao os resultados
+//Retorna SUCCESS para sucesso, INVALID_NULL_POINTER ou INCONSISTENT_FILE para erro
 int tam_mat_file(char *file, int *nl, int *nc)
 {
 
@@ -412,7 +430,7 @@ int tam_mat_file(char *file, int *nl, int *nc)
         
         if(fp == NULL)
         {
-            return ERROR;
+            return INVALID_NULL_POINTER;
         }
 
         fscanf(fp,"%d", &nlin);
@@ -430,6 +448,9 @@ int tam_mat_file(char *file, int *nl, int *nc)
     }
 }
 
+//Escreve a matriz em um arquivo
+//Dado a matriz e o arquivo
+//Retorna SUCCESS para sucesso, INVALID_NULL_POINTER, INCONSISTENT_FILE para erro
 int mat_to_file(TadMat *mat, char *fileOUT)
 {
 
@@ -498,6 +519,9 @@ int mat_to_file(TadMat *mat, char *fileOUT)
     }
 }
 
+//Imprime a matriz que esta em um arquivo .txt ou .imm
+//Dado o arquivo
+//Retorna SUCCESS para sucesso ou ERROR para erro
 int print_file(char *file)
 {
     TadMat *mat;
@@ -515,4 +539,3 @@ int print_file(char *file)
 
     return SUCCESS;
 }
-
