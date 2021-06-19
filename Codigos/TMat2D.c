@@ -225,6 +225,9 @@
         }
     }
 
+    //Imprime a matriz
+    //Dado a matriz
+    //Retorn -1 para erro e 0 para sucesso 
     int print_matriz(TadMat *p){
         if(p==NULL){
             return -1;
@@ -241,6 +244,9 @@
         return 0;
     }
 
+    //Consulta o numero de linhas e colunas de uma matriz
+    //Dado a matriz e os enderecos das variaveis que receberao o numero de linhas e colunas
+    //Retorna -1 para erro e 0 para sucesso  
     int nl_nc_mat(TadMat *mat, int *nl, int *nc){
         if(mat==NULL){
             return -1;
