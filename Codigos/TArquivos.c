@@ -141,7 +141,7 @@ int segment_file(int thr, char *fileIN, char *fileSEG)
 
 //Transforma um arquivo segmentado em um arquivo que mostra os componentes conexos
 //Dado o arquivo .imm segmentado e o arquivo de saida
-//Retorna SUCCESS para sucesso e ERROR para erro 
+//Retorna SUCCESS para sucesso ,ERROR para erro e INCONSISTENT_FILE caso seja TXT 
 int cc_imm(char *fileSEG, char *fileOUT)
 {
     
@@ -149,6 +149,11 @@ int cc_imm(char *fileSEG, char *fileOUT)
     TadMat *img, *img_rot;
     ponto vetp[4], base;
     int aux, nl, nc, i, j, k, valA, valB, rotulo = 0;
+    
+    if (identify_type(fileSEG)==TXT_FILE)
+    {
+        return INCONSISTENT_FILE;
+    }
     
 
     aux = open_file(fileSEG, &img); // Abre o arquivo segmentado 
@@ -170,7 +175,7 @@ int cc_imm(char *fileSEG, char *fileOUT)
             acessar_mat(img, i, j, &valA);
             acessar_mat(img_rot, i, j, &valB);
 
-            if(valA == 1 && valB == 0)//Estopim de procura do objeto 
+            if(valA == 1 && valB == 0)//Gatilho de procura do objeto 
             {
                 rotulo++;
 
