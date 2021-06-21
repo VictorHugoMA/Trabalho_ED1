@@ -14,7 +14,8 @@ struct Snode{
     ponto data;
 };
 
-
+//Cria a Stack
+//Retona NULL para erro e a struct Stack para sucesso
 Stack *stack_create(){
 
     Stack *st;
@@ -28,6 +29,9 @@ Stack *stack_create(){
     return st;
 }
 
+//Libera a memoria
+//Dado o ponteiro para a Stack
+//Retorna SUCCESS para sucesso e INVALID_NULL_POINTER para erro 
 int  stack_free(Stack *st){
     Snode *aux, *aux2;
 
@@ -46,6 +50,9 @@ int  stack_free(Stack *st){
     return SUCCESS;
 }
 
+//Insere um elemento
+//Dado o ponteiro para a Stack e o elemento
+//Retorna SUCCESS para sucesso e INVALID_NULL_POINTER ou OUT_OF_MEMORY para erro 
 int stack_push(Stack *st, ponto p){
     Snode *n;
 
@@ -72,6 +79,9 @@ int stack_push(Stack *st, ponto p){
     return SUCCESS;
 }
 
+//Remove o ultimo elemento inserido
+//Dado o ponteiro para a Stack
+//Retorna SUCCESS para sucesso e INVALID_NULL_POINTER ou OUT_OF_RANGE para erro 
 int stack_pop(Stack *st){
 
     Snode *aux;
@@ -96,6 +106,9 @@ int stack_pop(Stack *st){
         return SUCCESS;
 }
 
+//Devolve o ultimo elemento da lista por parametro
+//Dado o ponteiro para Stack e o ponteiro para o elemento
+//Retorna SUCCESS para sucesso, INVALID_NULL_POINTER ou ELEM_NOT_FOUND para erro 
 int stack_top(Stack *st, ponto *p){
 
     if(st==NULL)
@@ -108,6 +121,9 @@ int stack_top(Stack *st, ponto *p){
     return SUCCESS;
 }
 
+//Devolve o tamanho da Stack
+//Dado o ponteiro para a Stack
+//Retorna o tamanho para sucesso e INVALID_NULL_POINTER para erro
 int stack_size(Stack *st){
     if(st==NULL)
         return INVALID_NULL_POINTER;
@@ -115,6 +131,9 @@ int stack_size(Stack *st){
     return st->size;
 }
 
+//Imprime a Stack
+//Dado o ponteiro para a Stack
+//Retorna SUCCESS para sucesso, INVALID_NULL_POINTER ou ELEM_NOT_FOUND para erro 
 int stack_print(Stack *st){
     Snode *aux;
 
